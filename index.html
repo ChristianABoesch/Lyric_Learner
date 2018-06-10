@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <title>My API Practice</title>
+    </head>
+    <body>
+
+        <div>
+        What song do you want to memorize lyrics for? <br />
+        
+        <input type="text"></input>
+        <button>Search</button>
+        
+        <br />
+        <b>Track 1:</b> <span id="Track1">Loading</span>
+
+        	<span id="Link1">Loading</span>
+        </div>
+        <div>
+        <b>Track 2:</b> 
+        	<span  id="Track2">Loading</span>
+        	<span id="Link2">Loading</span>
+        </div>
+        
+        <div>
+        <b>Track 3:</b> 
+        	<span id="Track3">Loading</span>
+        	<span id="Link3">Loading</span>
+        </div>
+        <br />
+        Click on the lyrics link for the song you are looking for.<br />
+        Copy the lyrics from the page that opens and paste them into this box. 
+        <br />
+        <textarea name="Text1" cols="40" rows="20"></textarea>
+        <br />
+        Select level: 
+        <select>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+</select>. On level 1 you enter every 5th word and on level 5 you enter them all.<br />
+        Press start to begin memorizing lyrics.
+        <button onClick="toggleGame()">Start</button><br />
+        <hr />
+        
+        
+        <div style="display: none;" id="game">
+        When you were <input size="4"></input> before<br />
+		Couldn't look you in the <input size="3"></input><br />
+		You're <input size="4"></input> like an angel<br />
+        Your <input size="4"></input> makes me cry<br />
+        You float like a <input size="7"></input><br />
+        </div>
+        
+     </body>
+    
+	<script>
+    
+function toggleGame(){
+	var x = document.getElementById("game");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+function artistResults(json){
+ var myPre = document.getElementById("Pre");
+ 
+ var Track1 = json["message"]["body"]["track_list"][0]["track"]["track_name"]
+ var Link1 = json["message"]["body"]["track_list"][0]["track"]["track_share_url"]
+ var Track2 = json["message"]["body"]["track_list"][1]["track"]["track_name"]
+ var Link2 = json["message"]["body"]["track_list"][1]["track"]["track_share_url"]
+ var Track3 = json["message"]["body"]["track_list"][2]["track"]["track_name"]
+ var Link3 = json["message"]["body"]["track_list"][2]["track"]["track_share_url"]
+ 
+ 
+document.getElementById("Track1").innerHTML = Track1;
+document.getElementById("Link1").innerHTML = '<a href="'+Link1+'" target="_blank" >Lyrics</a>';
+document.getElementById("Track2").innerHTML = Track2;
+document.getElementById("Link2").innerHTML = '<a href="'+Link2+'" target="_blank" >Lyrics</a>';
+document.getElementById("Track3").innerHTML = Track3;
+document.getElementById("Link3").innerHTML = '<a href="'+Link3+'" target="_blank" >Lyrics</a>';
+console.log(json);} 
+	</script>
+     <script
+ src='https://api.musixmatch.com/ws/1.1/track.search?format=jsonp&callback=artistResults&q_track=Creep&q_artist=Radiohead&quorum_factor=1&apikey=API_KEY_GOES_HERE'>
+	</script>
+</html>
